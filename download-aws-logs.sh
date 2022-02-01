@@ -26,7 +26,7 @@ while [ -n "$nextToken" ]; do
         --next-token="${nextToken}")
 
     if [[ $(echo ${result} | jq -e '.events == []') == "true" ]]; then
-        echo "response with empty events found -> exiting."
+       # echo "response with empty events found -> exiting."
         exit
     fi
 
