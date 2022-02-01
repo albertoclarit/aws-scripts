@@ -6,7 +6,7 @@ IFS=$'\n\t'
 # LOG_GROUP_NAME="/***/***"
 # LOG_STREAM_NAME="***/***/***"
 # REGION="us-west-2"
-OUTPUT_FILE="$(date +"%Y%m%d").log"
+OUTPUT_FILE="$TASKID.log"
 
 result=$(aws logs get-log-events \
     --start-from-head \
