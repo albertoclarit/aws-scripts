@@ -3,9 +3,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# LOG_GROUP_NAME="/ecs/dev-reports-populate-job"
-# LOG_STREAM_NAME="ecs/dev-reports-populate-job/ff5494226f9946f181b548ce9c1d2c93"
-REGION="us-west-2"
+# LOG_GROUP_NAME="/***/***"
+# LOG_STREAM_NAME="***/***/***"
+# REGION="us-west-2"
 OUTPUT_FILE="$(date +"%Y%m%d").log"
 
 result=$(aws logs get-log-events \
