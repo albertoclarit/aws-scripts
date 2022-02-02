@@ -1,0 +1,75 @@
+- job:
+    name: job-parent
+    parameters:
+      - string:
+          name: message
+          default: Hello World Albert
+    description: 'Parent Job'
+    project-type: freestyle
+    builders:
+      - shell: 'echo job-parent $message'
+    publishers:
+      - trigger-parameterized-builds:
+          - project:
+              - job-a
+              - job-b
+              - job-c
+            predefined-parameters: |
+              message=${message}
+            condition: SUCCESS
+      - join-trigger:
+          even-if-unstable: false
+          publishers:
+            - trigger-parameterized-builds:
+                - project: job-join
+                  current-parameters: true
+                  trigger-from-child-projects: true
+                  trigger-with-no-params: false
+                  condition: 'SUCCESS'
+
+- job:
+    name: job-a
+    parameters:
+      - string:
+          name: message
+          default: Hello World Albert
+    description: 'Job A'
+    project-type: freestyle
+    concurrent: true
+    builders:
+      - shell: 'echo job-a $message'
+- job:
+    name: job-b
+    parameters:
+      - string:
+          name: message
+          default: Hello World Albert
+    description: 'Job B'
+    concurrent: true
+    project-type: freestyle
+    builders:
+      - shell: 'echo job-b $message'
+- job:
+    name: job-c
+    parameters:
+      - string:
+          name: message
+          default: Hello World Albert
+    description: 'Job C'
+    project-type: freestyle
+    builders:
+      - shell: |
+          #!/bin/bash
+          echo job-c $message
+          exit 0
+
+- job:
+    name: job-join
+    parameters:
+      - string:
+          name: message
+          default: Hello World Albert
+    description: 'Job Join'
+    project-type: freestyle
+    builders:
+      - shell: 'echo job-join $message'
